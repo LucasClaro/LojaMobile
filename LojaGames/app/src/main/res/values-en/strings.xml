@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">LojaGames</string>
+    <string name="CallbackErrorResponse">The catalog could not be updated</string>
+    <string name="CallbackErrorConection">No internet connection</string>
+    <string name="CatalogoMenuItem">Catalog</string>
+    <string name="PerfilMenuItem">Profile</string>
+    <string name="CarrinhoMenuItem">Cart</string>
+    <string name="ConfiguracoesMenuItem">Settings</string>
+    <string name="SobreMenuItem">About</string>
+    <string name="AbrirMenu">Open Menu</string>
+    <string name="FecharMenu">Close Menu</string>
+</resources>

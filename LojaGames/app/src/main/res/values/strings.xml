@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">LojaGames</string>
+    <string name="CallbackErrorResponse">\"Não foi possível atualizar o catálogo\"</string>
+    <string name="CallbackErrorConection">Sem conexão com a internet</string>
+    <string name="CatalogoMenuItem">Catálogo</string>
+    <string name="PerfilMenuItem">Perfil</string>
+    <string name="CarrinhoMenuItem">Carrinho</string>
+    <string name="ConfiguracoesMenuItem">Configurações</string>
+    <string name="SobreMenuItem">Sobre</string>
+    <string name="AbrirMenu">Abrir Menu</string>
+    <string name="FecharMenu">Fechar Menu</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
