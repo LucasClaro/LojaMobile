@@ -21,10 +21,16 @@ class NavigationActivity : AppCompatActivity() {
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
+        //Gerencia Toggle
         toggle = ActionBarDrawerToggle(this, b.drawerLayout, R.string.AbrirMenu, R.string.FecharMenu)
         b.drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
 
+        //Define o frag default
+        val frag = CatalogoFragment.newInstance()
+        supportFragmentManager.beginTransaction().replace(R.id.fragContainer, frag).commit()
+
+        //Troca Fragmentos
         b.navigationView.setNavigationItemSelectedListener {
             b.drawerLayout.closeDrawers()
 
