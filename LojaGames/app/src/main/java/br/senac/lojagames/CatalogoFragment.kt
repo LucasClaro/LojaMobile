@@ -2,10 +2,10 @@ package br.senac.lojagames
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import br.senac.lojagames.Model.Produto
 import br.senac.lojagames.Services.ProdutoService
 import br.senac.lojagames.databinding.FragmentCatalogoBinding
@@ -22,6 +22,13 @@ import java.util.concurrent.TimeUnit
 class CatalogoFragment : Fragment() {
 
     lateinit var b : FragmentCatalogoBinding
+    var filtroPesquisa : String? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        filtroPesquisa = getArguments()?.getString("Pesquisa");
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
@@ -36,16 +43,30 @@ class CatalogoFragment : Fragment() {
         atualizarProdutos()
     }
 
-    fun atualizarUI(listaProdutos : List<Produto>?) {
+    fun atualizarUI(listaProdutos: List<Produto>?) {
         b.container.removeAllViews()
 
         listaProdutos?.forEach {
-            val cardBinding = GameCardBinding.inflate(layoutInflater)
 
-            cardBinding.GameName.text = it.nome
-            cardBinding.GamePrice.text = it.preco.toString()
+            if (filtroPesquisa != null) {
+                if (it.nome.contains(filtroPesquisa!!, true)) {
+                    val cardBinding = GameCardBinding.inflate(layoutInflater)
 
-            b.container.addView(cardBinding.root)
+                    cardBinding.GameName.text = it.nome
+                    cardBinding.GamePrice.text = it.preco.toString()
+
+                    b.container.addView(cardBinding.root)
+                }
+            }
+            else {
+                val cardBinding = GameCardBinding.inflate(layoutInflater)
+
+                cardBinding.GameName.text = it.nome
+                cardBinding.GamePrice.text = it.preco.toString()
+
+                b.container.addView(cardBinding.root)
+            }
+
         }
     }
 
@@ -94,6 +115,17 @@ class CatalogoFragment : Fragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance() = CatalogoFragment()
+//        fun newInstance() = CatalogoFragment()
+
+        fun newInstance(TextoPesquisa: String?): CatalogoFragment {
+            val myFragment = CatalogoFragment()
+            val args = Bundle()
+            args.putString("Pesquisa", TextoPesquisa)
+            myFragment.setArguments(args)
+            return myFragment
+        }
+
     }
+
+
 }
