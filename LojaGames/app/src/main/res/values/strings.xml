@@ -11,4 +11,9 @@
     <string name="FecharMenu">Fechar Menu</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="Pesquisa">Buscar</string>
+    <string name="ChipMetroidVania">Metroidvania</string>
+    <string name="ChipPlataforma">Plataforma</string>
+    <string name="ChipPuzzle">Puzzle</string>
+    <string name="ChipShooter">Shooter</string>
+    <string name="ChipRogueLike">Rogue Like</string>
 </resources>

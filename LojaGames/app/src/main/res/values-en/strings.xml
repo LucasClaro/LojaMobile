@@ -11,4 +11,9 @@
     <string name="AbrirMenu">Open Menu</string>
     <string name="FecharMenu">Close Menu</string>
     <string name="Pesquisa">Search</string>
+    <string name="ChipMetroidVania">Metroidvania</string>
+    <string name="ChipPlataforma">Platformer</string>
+    <string name="ChipPuzzle">Puzzle</string>
+    <string name="ChipShooter">Shooter</string>
+    <string name="ChipRogueLike">Rogue Like</string>
 </resources>

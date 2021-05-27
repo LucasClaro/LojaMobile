@@ -10,6 +10,7 @@ import br.senac.lojagames.Model.Produto
 import br.senac.lojagames.Services.ProdutoService
 import br.senac.lojagames.databinding.FragmentCatalogoBinding
 import br.senac.lojagames.databinding.GameCardBinding
+import com.google.android.material.chip.Chip
 import com.google.android.material.snackbar.Snackbar
 import okhttp3.OkHttpClient
 import retrofit2.Call
@@ -23,6 +24,8 @@ class CatalogoFragment : Fragment() {
 
     lateinit var b : FragmentCatalogoBinding
     var filtroPesquisa : String? = null
+    var filtrosCategorias  = arrayListOf<String>()
+    var produtos = arrayListOf<Produto>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,6 +37,34 @@ class CatalogoFragment : Fragment() {
         // Inflate the layout for this fragment
         b = FragmentCatalogoBinding.inflate(inflater)
 
+        var categorias = arrayListOf("MetroidVania", "Plataforma", "Puzzle", "Shooter", "Rogue Like")
+        categorias.forEach {
+            val chip = Chip(this.context)
+
+            when (it) {
+                "MetroidVania" -> chip.setText(R.string.ChipMetroidVania)
+                "Plataforma" -> chip.setText(R.string.ChipPlataforma)
+                "Puzzle" -> chip.setText(R.string.ChipPuzzle)
+                "Shooter" -> chip.setText(R.string.ChipShooter)
+                "Rogue Like" -> chip.setText(R.string.ChipRogueLike)
+            }
+            chip.isCheckable = true
+
+            chip.setOnCheckedChangeListener { _, isChecked ->
+                if (isChecked) {
+                    filtrosCategorias.add(it)
+                }
+                else {
+                    filtrosCategorias.remove(it)
+                }
+                atualizarUI()
+
+            }
+
+            b.chipGroup.addView(chip)
+        }
+
+
         return b.root
     }
 
@@ -43,13 +74,23 @@ class CatalogoFragment : Fragment() {
         atualizarProdutos()
     }
 
-    fun atualizarUI(listaProdutos: List<Produto>?) {
+    fun atualizarUI() {
         b.container.removeAllViews()
 
-        listaProdutos?.forEach {
+        produtos?.forEach {
 
-            if (filtroPesquisa != null) {
-                if (it.nome.contains(filtroPesquisa!!, true)) {
+            if (filtrosCategorias.count() <= 0 || filtrosCategorias.contains(it.categoria)) {
+                if (filtroPesquisa != null) {
+                    if (it.nome.contains(filtroPesquisa!!, true)) {
+                        val cardBinding = GameCardBinding.inflate(layoutInflater)
+
+                        cardBinding.GameName.text = it.nome
+                        cardBinding.GamePrice.text = it.preco.toString()
+
+                        b.container.addView(cardBinding.root)
+                    }
+                }
+                else {
                     val cardBinding = GameCardBinding.inflate(layoutInflater)
 
                     cardBinding.GameName.text = it.nome
@@ -57,14 +98,6 @@ class CatalogoFragment : Fragment() {
 
                     b.container.addView(cardBinding.root)
                 }
-            }
-            else {
-                val cardBinding = GameCardBinding.inflate(layoutInflater)
-
-                cardBinding.GameName.text = it.nome
-                cardBinding.GamePrice.text = it.preco.toString()
-
-                b.container.addView(cardBinding.root)
             }
 
         }
@@ -90,7 +123,8 @@ class CatalogoFragment : Fragment() {
         val callback = object : Callback<List<Produto>> {
             override fun onResponse(call: Call<List<Produto>>, response: Response<List<Produto>>) {
                 if (response.isSuccessful) {
-                    atualizarUI(response.body())
+                    produtos = response.body() as ArrayList<Produto>
+                    atualizarUI()
                 }
                 else {
                     Snackbar
